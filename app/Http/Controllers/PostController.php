@@ -21,12 +21,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $x=$request->validate([
             'title' => 'required|max:255',
             'body' => 'required'
         ]);
 
-        return 'ok';
+        $post=Post::create($x);
+
+        return ['post'=>$post];
     }
 
     /**
