@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Http\Requests\StorePostRequest;
-use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -36,7 +35,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return $post;
     }
 
     /**
@@ -44,7 +43,14 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $x=$request->validate([
+            'title' => 'required|max:255',
+            'body' => 'required'
+        ]);
+
+        $post->update($x);
+
+        return ['post'=>$post];
     }
 
     /**
@@ -52,6 +58,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return ['message'=>"UR POST DELATED"];
     }
 }
